@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--Design-->
+    <link rel="stylesheet" href="main.css">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="shortcut icon" href="/Extra-Trial/Assets-main/favicon.svg" type="image/x-icon">
+   <title>Uma.Co |Forever Slow</title>
+</head>
+<body>
+
+  <!--Scrollbar-->
+    <div id="progress">
+        <span id="progress-value"></span>
+    </div>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light py-2 py-lg-4 bg-white shadow-sm" style="max-height: 350px;">
+      <div class="container" style="height: 4rem;">
+        <!-- Navbar brand--><a class="navbar-brand" href="/Extra-Trial/Uma.html" style="margin:0px; display: flex; justify-content: center; align-items: center;"><i class='bx bxs-color' style="font-size: 40px; margin-bottom: 0px; color: var(--highlight-color);"></i></a>
+        <!-- Navbar toggler-->
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <!-- Navbar collapse-->
+        <div class="navbar-collapse d-lg-flex align-items-lg-center justify-content-lg-between collapse" id="navbarSupportedContent" style=" background-color: #fff; padding: 1rem; margin-top: 1rem; z-index: +1000;">
+          <!-- Navbar menu right-->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown me-lg-3" style="margin-bottom: 1rem;"><a class="nav-link text-uppercase dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+              <ul class="dropdown-menu mt-3" aria-labelledby="navbarDropdown" style="border: none; border-top: 2px solid var(--highlight-color);">
+                <li><a class="dropdown-item" href="/Extra-Trial/Uma.html">Homepage</a></li>
+                <li><a class="dropdown-item" href="/Extra-Trial/shop.html">Shop</a></li>
+                <li><a class="dropdown-item" href="/Extra-Trial/details.html">Item details</a></li>
+                <li><a class="dropdown-item" href="/Extra-Trial/cart.html">Shopping cart</a></li>
+              </ul>
+            </li>
+            <li class="nav-item me-lg-3"><a class="nav-link text-uppercase" href="/Extra-Trial/shop.html">Shop</a></li>
+            <li class="nav-item"><a class="nav-link text-uppercase" href="/Extra-Trial/details.html">Detail</a></li>
+          </ul>
+          <!-- Navbar menu left-->
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; flex-wrap: wrap;">
+                <a href="/Extra-Trial/cart.html"><h4 style="display: flex; justify-content: center;"><i class='bx bx-cart-alt' style="font-size: 30px;"></i><span class="position-absolute badge rounded-pill bg-danger" style="height: 10px; width: 10px; font-size: 1px; margin-left: 1rem; padding: 0.1rem;">2</span></h4></a>
+                <li class="nav-item dropdown me-lg-3" style="margin-bottom: 1rem; text-decoration: none; display: flex; flex-direction: column;"><a class="nav-link text-uppercase dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: flex; justify-content: center; align-items: center;"><i class='bx bxs-user' style="font-size: 30px;" id="loggedout"></i><i class='bx bx-user' style="font-size: 30px;" id="loggedin"></i></a>
+                  <ul class="dropdown-menu mt-3" aria-labelledby="navbarDropdown" style="border: none; border-top: 2px solid var(--highlight-color); padding: 0.5em;">
+                    <a href="/Extra-Trial/login.html" class="dropdown-item" style="display: flex; justify-content: center;" id="def"><h4 style="display: flex; justify-content: center; flex-direction: column;"><i class='bx bx-envelope' style="font-size: 30px;" ></i></a>
+                    <button class="dropdown-item" id="signInButton"><i class='bx bxl-google'></i></button>
+                    <button class="dropdown-item btn btn-primary" id="signOutButton" style="background-color: var(--highlight-color); border-color: var(--highlight-color); color: #fff; display: flex; justify-content: center; border-radius: 10px; text-align: center;">Sign Out</button>
+                  </ul>
+                </li>
+                <script type="module">
+
+                  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+                 
+                
+                  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+                  
+                  const firebaseConfig = {
+                    apiKey: "AIzaSyCkPq2sY2Z1rGr2uauZOGtvwcGt1zPbJco",
+                    authDomain: "login-1-5c650.firebaseapp.com",
+                    projectId: "login-1-5c650",
+                    storageBucket: "login-1-5c650.appspot.com",
+                    messagingSenderId: "206619188225",
+                    appId: "1:206619188225:web:bcc1e130f570b5f8467400"
+                  };            
+                
+                  const app = initializeApp(firebaseConfig);
+                  const auth = getAuth();
+                  const provider = new GoogleAuthProvider();
+                  provider.setCustomParameters({
+                    prompt: 'select_account'
+                  });
+                
+                  const signInButton = document.getElementById("signInButton");
+                  const signOutButton = document.getElementById("signOutButton");
+                  const userName = document.getElementById("userName");
+                  const userEmail = document.getElementById("userEmail");
+                  const loggedout = document.getElementById("loggedout");
+                  const loggedin = document.getElementById("loggedin");
+                
+                  signOutButton.style.display = "none";
+                
+                  const userSignIn = async() => {
+                    signInWithPopup(auth, provider)
+                    .then((result) => {
+                        const user = result.user
+                        console.log(user);
+                    }).catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message
+                    })
+                  }
+                
+                  const userSignOut = async() => {
+                    signOut(auth).then(() => {
+                        alert("You have signed out successfully!");
+                    }).catch((error) => {})
+                  }
+                
+                  onAuthStateChanged(auth, (user) => {
+                    if(user) {
+                      signOutButton.style.display = "block";
+                      loggedin.style.display = "flex";
+                      loggedout.style.display = "none";
+
+                      userName.innerHTML = user.displayName;
+                      userEmail.innerHTML = user.email
+                    } else {
+                      signOutButton.style.display = "none";
+                      loggedin.style.display = "none";
+                      loggedout.style.display = "flex";                          
+                    }
+                  })
+                
+                  signInButton.addEventListener('click', userSignIn);
+                  signOutButton.addEventListener('click', userSignOut);
+                </script>
+              </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div style="display: flex; width: 100%; background-color: #e4e0e0; padding: 0.5em;">
+        <div class="container">
+            <p style="margin: 0px;"><strong><a href="/Extra-Trial/Uma.html" style="color:#626bf0;">Home /</a></strong>Product Details</p>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1; margin: 2rem; flex-wrap: wrap;">
+        <div id="image" style="display: flex; width: 30%; min-width: 311px;">
+            <!--buttons-->
+            <div style="display: flex; flex-direction: column; width: 20%;">
+                <button style="width: 100%; border: none; background-color: transparent;"><img src="/Extra-Trial/Assets-main/Product.jpg" style="width: 100%; border-radius: 10px; padding: 0.1rem;"></button>
+                <button style="width: 100%; border: none; background-color: transparent;"><img src="/Extra-Trial/Assets-main/Product.jpg" style="width: 100%; border-radius: 10px; padding: 0.1rem;"></button>
+                <button style="width: 100%; border: none; background-color: transparent;"><img src="/Extra-Trial/Assets-main/Product.jpg" style="width: 100%; border-radius: 10px; padding: 0.1rem;"></button>
+            </div>
+            <!--Image-->
+            <div style="display: flex; width: 80%;">
+                <img src="/Extra-Trial/Assets-main/Product.jpg" style="width: 100%; border-radius: 10px; padding: 0.1rem;">
+            </div>
+        </div>
+        <div style="display: flex; justify-content: left; margin: 1rem; flex-direction: column; max-width: 30%;">
+            <h2>Product 1</h2>
+            <h4> Description</h4>
+            <p style=" display: flex; text-wrap: wrap;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat deleniti laudantium reiciendis sapiente cum, id accusamus consequuntur, suscipit modi maiores iste alias. Perferendis, officia totam provident nostrum culpa amet delectus.</p>
+            <!--Slector-->
+            <div style="display: flex; justify-content: left; align-items: center;">
+                <p style="margin: 0px; text-wrap: nowrap;">Select Colour: </p> 
+                <button style="background-color: aqua; padding: 0.4em; border: none; border-radius: 200px; margin: 0.5em;"></button>
+                <button style="background-color: aqua; padding: 0.4em; border: none; border-radius: 200px; margin: 0.5em;"></button>
+                <button style="background-color: aqua; padding: 0.4em; border: none; border-radius: 200px; margin: 0.5em;"></button>
+                <button style="background-color: aqua; padding: 0.4em; border: none; border-radius: 200px; margin: 0.5em;"></button>
+            </div>
+            <div style="display: flex; justify-content: left; align-items: center;">
+                <p style="margin: 0px; text-wrap: nowrap;">Select Size: </p> 
+                <div class="dropdown-center" style="margin: 0.5em;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: var(--highlight-color) !important;">
+                      Size Select
+                    </button>
+                    <ul class="dropdown-menu" style="flex-direction: column; justify-content: center; border: 0.1px solid #7e87f7; border-top: 1.5px solid var(--highlight-color);">
+                      <li><p class="dropdown-item" style="margin: 0px;">1</p></li>
+                      <li><p class="dropdown-item" style="margin: 0px;">2</p></li>
+                      <li><p class="dropdown-item" style="margin: 0px;">3</p></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; text-align: left;">
+                <p>Number Of Products</p>
+                <div style="display: flex; width: 50%; justify-content: left; align-items: center; margin-left: 1em;">
+                    <button style=" display:  flex; background-color: #7e87f7; padding: 0.1em; border: none; border-radius: 200px; width: 20px; height: 20px; justify-content: center; align-items: center;"><p style="font-size: 15px; margin: 0px; font-weight: 700; color: #fff;">+</p></button>
+                    <input type="text" value="1" style="margin: 0.5em; padding: auto; width: 2em; text-align: center;">
+                    <button style=" display:  flex; background-color: #7e87f7; padding: 0.1em; border: none; border-radius: 200px; width: 20px; height: 20px; justify-content: center; align-items: center;"><p style="font-size: 15px; margin: 0px; font-weight: 700; color: #fff;">-</p></button>
+                    <button style="background-color: var(--highlight-color); margin: 1em; padding: 0.5em; color: aliceblue; border: none; border-radius: 10px;"><p style="display: flex; margin: 0px;">Add To Cart</p></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+        <section class="pb-5">
+            <div class="container">
+              <div class="row">
+                <!-- Item information-->
+                <div class="col-xl-10 mx-auto">
+                  <ul class="nav nav-tabs tabs-fill justify-content-center border-0 flex-column flex-md-row" id="myTab" role="tablist">
+                    <li class="nav-item flex-fill text-center bg-light mx-2" role="presentation"><a class="nav-link text-small fw-bold py-3 border-0 active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true" style="color: var(--highlight-color);">Description</a></li>
+                    <li class="nav-item flex-fill text-center bg-light mx-2" role="presentation"><a class="nav-link text-small fw-bold py-3 border-0" id="info-tab" data-bs-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false" tabindex="-1" style="color: var(--highlight-color);">Additional info</a></li>
+                    <li class="nav-item flex-fill text-center bg-light mx-2" role="presentation"><a class="nav-link text-small fw-bold py-3 border-0" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false" tabindex="-1" style="color: var(--highlight-color);">Reviews</a></li>
+                    <li class="nav-item flex-fill text-center bg-light mx-2" role="presentation"><a class="nav-link text-small fw-bold py-3 border-0" id="shipping-tab" data-bs-toggle="tab" href="#shipping" role="tab" aria-controls="shipping" aria-selected="false" tabindex="-1" style="color: var(--highlight-color);">Shipping &amp; Returns</a></li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="description" role="tabpanel" aria-labelledby="description-tab">
+                      <div class="p-3 p-md-5">
+                        <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                        <ul class="text-muted mb-4">
+                          <li>kslamja s</li>
+                          <li>pwokdna hkans,as</li>
+                          <li>pwwnsmah jsmaks</li>
+                          <li>ppowms allsie aslljas</li>
+                        </ul>
+                        <div class="row align-items-center mb-4">
+                          <div class="col-lg-4 mb-4 mb-lg-0"><img class="img-fluid" src="/Extra-Trial/Assets-main/Product.jpg" alt=".."></div>
+                          <div class="col-lg-4 mb-4 mb-lg-0"><img class="img-fluid" src="/Extra-Trial/Assets-main/Product.jpg" alt=".."></div>
+                          <div class="col-lg-4"><img class="img-fluid" src="/Extra-Trial/Assets-main/Product.jpg" alt=".."></div>
+                        </div>
+                        <h6>Design and Display</h6>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                        <h6>Hardware</h6>
+                        <p class="text-muted">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                      <div class="p-3 p-md-5">
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr>
+                                  <th class="small px-3">Brand:</th>
+                                  <td class="small px-3">Other</td>
+                                </tr>
+                                <tr>
+                                  <th class="small px-3">Other:</th>
+                                  <td class="small px-3">kalsia</td>
+                                </tr>
+                                <tr>
+                                  <th class="small px-3">Package thickness:</th>
+                                  <td class="small px-3">17 centimeters</td>
+                                </tr>
+                                <tr>
+                                  <th class="small px-3">Package weight:</th>
+                                  <td class="small px-3">42 grams</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                      <div class="p-3 p-md-5">
+                        <p class="small text-muted mb-1">customer</p>
+                        <h5 class="mb-4">reviews</h5>
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="d-flex mb-4"><img class="rounded-circle p-1 shadow-sm flex-grow-1 align-self-baseline" src="" alt="???" width="60">
+                              <div class="ms-3">
+                                <h3 class="h6 mb-0">Pat Pat</h3>
+                                <p class="text-gray small mb-0">Date</p>
+                                <ul class="list-inline mb-3">
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                </ul>
+                                <p class="text-small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="d-flex mb-4"><img class="rounded-circle p-1 shadow-sm flex-grow-1 align-self-baseline" src="" alt="..." width="60">
+                              <div class="ms-3">
+                                <h3 class="h6 mb-0">Pat Pat</h3>
+                                <p class="text-gray small mb-0">Date</p>
+                                <ul class="list-inline mb-3">
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                  <li class="list-inline-item small m-0"><i class="fas fa-star text-primary small"></i></li>
+                                </ul>
+                                <p class="text-small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                      <div class="p-3 p-md-5">
+                        <h6>Returns Policy</h6>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eros justo, accumsan non dui sit amet. Phasellus semper volutpat mi sed imperdiet. Ut odio lectus, vulputate non ex non, mattis sollicitudin purus. Mauris consequat justo a enim interdum, in consequat dolor accumsan. Nulla iaculis diam purus, ut vehicula leo efficitur at.</p>
+                        <p class="text-muted mb-5">Interdum et malesuada fames ac ante ipsum primis in faucibus. In blandit nunc enim, sit amet pharetra erat aliquet ac.</p>
+                        <h6>Shipping</h6>
+                        <p class="text-muted">Pellentesque ultrices ut sem sit amet lacinia. Sed nisi dui, ultrices ut turpis pulvinar. Sed fringilla ex eget lorem consectetur, consectetur blandit lacus varius. Duis vel scelerisque elit, et vestibulum metus. Integer sit amet tincidunt tortor. Ut lacinia ullamcorper massa, a fermentum arcu vehicula ut. Ut efficitur faucibus dui Nullam tristique dolor eget turpis consequat varius. Quisque a interdum augue. Nam ut nibh mauris.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    </div>
+
+
+    <div style="display: flex; width: 100%; flex-direction: column; align-items: center; justify-content: center; margin-top: 1rem; margin-bottom: 1rem;">
+        <h2>You may like</h2>
+        <div class="container" style="display: flex; overflow-x: scroll;" id="products">
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="/Extra-Trial/Assets-main/Product.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$10</p>
+            </div>
+
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://demo.bootstrapious.com/shopio/1-1/img/product-2.207aaf3b.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                            <p><span class="material-symbols-outlined">
+                              shopping_cart
+                              </span></p>
+                            <p><span class="material-symbols-outlined">
+                              cardio_load
+                              </span></p>
+                            <p><span class="material-symbols-outlined">
+                              share
+                              </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$45</p>
+            </div>
+
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://d19m59y37dris4.cloudfront.net/shopio/1-1/img/product-3.fc009d76.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$10</p>
+            </div>
+
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://demo.bootstrapious.com/shopio/1-1/img/product-4.c3ff8a44.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$34</p>
+            </div>
+            
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://demo.bootstrapious.com/shopio/1-1/img/product-5.5d8c02c5.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$10</p>
+            </div>
+            
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://demo.bootstrapious.com/shopio/1-1/img/product-6.82c4cac8.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$29</p>
+            </div>
+
+            <div style="width: 18rem; margin: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="image-container">
+                    <img src="https://demo.bootstrapious.com/shopio/1-1/img/product-7.be376c2d.jpg" class="card-img-top product-hover-img" alt="...">
+                    <div class="product-hover">
+                        <div style="background-color: #fff; color: black; margin: 0.2rem; padding: 0.5rem; border-radius: 10px; text-align: center;">
+                          <p><span class="material-symbols-outlined">
+                            shopping_cart
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            cardio_load
+                            </span></p>
+                          <p><span class="material-symbols-outlined">
+                            share
+                            </span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Product Name</h4>
+                <p class="card-text" style="align-items: center; color: var(--text-color-subheading);">$58</p>
+            </div>
+        </div>
+    </div> 
+
+    <footer class="bg-dark" style="margin-top: 1rem;">
+        <div class="container py-5">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3 mb-md-0" style="color: aliceblue;"><i class='bx bxs-color' style="font-size: 40px; margin-bottom: 0px; display: flex; justify-content: left; align-items: center;"><h3 style="margin: 1rem;">Harsh</h3></i>
+            </div>
+            <div class="col-md-2 col-sm-12 mb-3 mb-md-0" style="display: flex; justify-content: right; flex-direction: column; text-align: right; border-bottom: 1px solid #b4b4b4;">
+              <h6 class="text-white">Menu</h6>
+              <ul class="list-unstyled text-muted mb-0">
+                <li class="mb-2"> <a class="reset-anchor text-white" href="#">About</a></li>
+                <li class="mb-2"><a class="reset-anchor text-white" href="#">Blog</a></li>
+                <li class="mb-2"><a class="reset-anchor text-white" href="#">Contact</a></li>
+                <li class="mb-2"><a class="reset-anchor text-white" href="#">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="col-md-2 col-sm-12 mb-3 mb-md-0" style="display: flex; justify-content: right; flex-direction: column; text-align: right; border-bottom: 1px solid #b4b4b4;">
+              <h6 class="text-white">Checkout</h6>
+              <ul class="list-unstyled text-muted mb-0">
+                <li class="mb-2"> <a class="reset-anchor text-white" href="#">My Account</a></li>
+                <li class="mb-2"> <a class="reset-anchor text-white" href="#">Orders Tracking</a></li>
+                <li class="mb-2"> <a class="reset-anchor text-white" href="#">Checkout</a></li>
+                <li class="mb-2"> <a class="reset-anchor text-white" href="#">Wishlist</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-3 mb-md-0" style="display: flex; justify-content: right; flex-direction: column; text-align: right; border-bottom: 1px solid #b4b4b4;">
+              <p class="lead mb-1 text-white"><a class="reset-anchor text-white" href="tel:+1 123 456 789">+1 123 456 789</a></p>
+              <p class="text-muted text-white">12 El Dorado, Las Vegas, AZ</p>
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item"><a class="social-icon text-white" href="#"><i class='bx bxl-facebook' style="font-size: 30px;"></i></a></li>
+                <li class="list-inline-item"><a class="social-icon text-white" href="#"><i class='bx bxl-twitter' style="font-size: 30px;"></i></a></li>
+                <li class="list-inline-item"><a class="social-icon text-white" href="#"><i class='bx bxl-youtube' style="font-size: 30px;"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="border-top py-4" style="border-color: #686868 !important">
+            <div class="row">
+              <div class="col-lg-6">
+                <p class="small text-muted mb-0 text-white" style="color: aliceblue !important;">© 2023 All rights reserved.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/Extra-Trial/main.js"></script>
+</body>

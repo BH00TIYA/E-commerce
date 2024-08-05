@@ -1,0 +1,192 @@
+*{
+    --highlight-color: #4650dd;
+    --text-color-heading: #212529;
+    --text-color-subheading: #6c757d;
+    --bg-button-normal: #f8f9fa;
+    --bg-main: #fff;
+
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+html{
+    font-size: 16px;
+}
+
+body{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var(--bg-main);
+    width: 100vw;
+    font-family: 'IBM Plex Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar{
+    display: none;
+}
+a{
+    text-decoration: none;
+    color: var(--text-color-heading);
+}
+
+#Naving{
+    margin-top: 0px;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.banner {
+    background-image: url('https://demo.bootstrapious.com/shopio/1-1/img/bg-banner-1.db0a9631.jpg');
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.Markers{
+    display: flex;
+    flex-direction: column;
+    height: 40rem;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.product-hover {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -10;
+}
+
+.product-hover p{
+    margin: 0.5rem;
+}
+
+.image-container {
+    position: relative;
+    min-width: 200px;
+    border-radius: 0.5rem;
+}
+
+.image-container:hover .product-hover {
+    display: flex;
+    z-index: +1;
+    justify-content: end;
+    align-items:flex-end;
+    transition: 0.5ms ease-in-out;
+}
+
+.image-container:hover .product-hover-img{
+    opacity: 0.7;
+}
+.product-hover-img{
+    border-radius: 10px;
+}
+
+#full-width-banner{
+    width: 100%;
+    background-image: url(/Extra-Trial/Assets-main/fullwidth-banner.jpg);
+    display: flex;
+    flex-grow: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: right;
+}
+
+#products::-webkit-scrollbar{
+    display: none;
+}
+
+.list-inline a{
+    color: #f8f9fa;
+}
+
+#progress{
+    width: 65px;
+    height: 65px;
+    background-color: var(--highlight-color);
+    border-radius:50%;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    display: grid;
+    place-items:center;
+    z-index: +999;
+}
+#progress-value{
+    display: block;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    background-color: #fff;
+    border-radius:50%;
+    display: grid;
+    place-items:center;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: var(--highlight-color);
+}
+
+#hero{
+    background-image: url(/Extra-Trial/Assets-main/watch.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar{
+    min-width: 195px;
+    max-width: 375px;
+    padding: 0.5rem;
+    border-right: 1px solid black;
+    display: flexbox;
+    flex-grow: 1;
+}
+
+#pricer{
+    background: #212529;
+}
+
+#signInButton{
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+}
+#old{
+    display: flex;
+    flex-direction: column;
+}
+#new{
+    display: none;
+}
